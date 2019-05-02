@@ -2,11 +2,13 @@
   <section class="done">
     <h3>Done</h3>
     <transition-group class="doneitems" name="list" tag="div">
-      <div v-for="(doneItem, index) in propsdata" v-bind:key="doneItem" class="doneitem">
-        <span>{{doneItem}}</span>
-        <div class="buttons">
-          <span class="backtotodo" @click="cancelDone(doneItem, index)">다시 할일로</span>
-          <span class="removebutton" @click="removeDone(doneItem, index)">삭제</span>
+      <div v-for="(todoItem) in propsdata" v-bind:key="todoItem.id">
+        <div v-if="todoItem.done" class="doneitem">
+          <span>{{todoItem.todo}}</span>
+          <div class="buttons">
+            <span class="backtotodo" @click="cancelDone(todoItem.id)">다시 할일로</span>
+            <span class="removebutton" @click="removeDone(todoItem.id)">삭제</span>
+          </div>
         </div>
       </div>
     </transition-group>
@@ -17,11 +19,11 @@
 export default {
   props: ["propsdata"],
   methods: {
-    cancelDone(doneItem, idx) {
-      this.$emit("cancelDone", doneItem, idx);
+    cancelDone(id) {
+      this.$emit("cancelDone", id);
     },
-    removeDone(doneItem, idx) {
-      this.$emit("removeDone", doneItem, idx);
+    removeDone(id) {
+      this.$emit("removeDone", id);
     }
   }
 };
@@ -42,9 +44,9 @@ export default {
   margin-top: 15px;
   padding: 10px 0;
 }
- .done::-webkit-scrollbar{
-   display:none;
- }
+.done::-webkit-scrollbar {
+  display: none;
+}
 .done .doneitems {
   display: flex;
   flex-flow: column nowrap;

@@ -1,12 +1,14 @@
 <template>
   <section class="todo">
     <transition-group class="items" name="list" tag="div">
-      <div v-for="(todoItem, index) in propsdata" v-bind:key="todoItem" class="item">
-        <span class="check" @click="addDone(todoItem, index)">
-          <i class="checkBtn fas fa-check" aria-hidden="true"></i>
-        </span>
-        <span>{{todoItem}}</span>
-        <span class="removebutton" @click="removeTodo(todoItem, index)">삭제</span>
+      <div v-for="(todoItem) in propsdata" v-bind:key="todoItem.id">
+        <div v-if="!todoItem.done" class="item">
+          <span class="check" @click="addDone(todoItem.id)">
+            <i class="checkBtn fas fa-check" aria-hidden="true"></i>
+          </span>
+          <span>{{todoItem.todo}}</span>
+          <span class="removebutton" @click="removeTodo(todoItem.id)">삭제</span>
+        </div>
       </div>
     </transition-group>
   </section>
@@ -16,11 +18,11 @@
 export default {
   props: ["propsdata"],
   methods: {
-    addDone(item, idx) {
-      this.$emit("addDone", item, idx);
+    addDone(id) {
+      this.$emit("addDone", id);
     },
-    removeTodo(item, idx) {
-      this.$emit("removeTodo", item, idx);
+    removeTodo(id) {
+      this.$emit("removeTodo", id);
     }
   }
 };
