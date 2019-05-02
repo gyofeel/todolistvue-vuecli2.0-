@@ -1,13 +1,18 @@
 <template>
   <div id="app">
     <Header v-on:addTodo="addTodo"></Header>
-    <Todo v-bind:propsdata="todoItems" v-on:addDone="addDone" v-on:removeTodo="removeTodoItem"></Todo>
+    <Todo
+      v-bind:propsdata="todoItems"
+      v-on:addDone="addDone"
+      v-on:removeTodo="removeTodoItem"
+      v-on:showInputMemo="showInputMemo"
+    ></Todo>
     <Done
       v-bind:propsdata="todoItems"
       v-on:removeDone="removeTodoItem"
       v-on:cancelDone="cancelDone"
     ></Done>
-    <MemoInput></MemoInput>
+    <MemoInput v-bind:iddata="memoId" v-if="this.showingMemo" v-on:addMemo="addMemo"></MemoInput>
   </div>
 </template>
 
@@ -23,7 +28,9 @@ export default {
   name: "app",
   data() {
     return {
-      todoItems: []
+      todoItems: [],
+      showingMemo: false,
+      memoId: ""
     };
   },
   methods: {
@@ -42,7 +49,12 @@ export default {
     cancelDone(id) {
       let idx = this.todoItems.findIndex(o => o.id === id);
       this.doneItems[idx].done = false;
-    }
+    },
+    showInputMemo(id) {
+      this.showingMemo = !this.showingMemo;
+      this.memoId = id;
+    },
+    addMemo() {}
   },
   // created() {
   //   if (localStorage.todoItems.length > 0) {
@@ -59,7 +71,8 @@ export default {
   components: {
     Header,
     Todo,
-    Done
+    Done,
+    MemoInput
   }
 };
 </script>
