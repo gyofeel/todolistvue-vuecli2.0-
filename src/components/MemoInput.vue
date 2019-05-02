@@ -1,14 +1,8 @@
 <template>
   <transition>
-    <div class="memoinput modalmask">
+    <div class="memoinput modalmask" @keyup.esc="hideInputMemo">
       <h2>Insert memo</h2>
-      <input
-        v-model="newMemo"
-        v-on:keypress.enter="addMemo"
-        v-on:keypress.esc="clearInput"
-        type="text"
-        placeholder="메모 입력 ..."
-      >
+      <input v-model="newMemo" @keyup.enter="addMemo" type="text" placeholder="메모 입력 ...">
     </div>
   </transition>
 </template>
@@ -21,14 +15,17 @@ export default {
       newMemo: ""
     };
   },
-  id: "iddata",
+  props: ["propsdata"],
   methods: {
     addMemo() {
-      let id = this.id;
+      let id = this.propsdata;
       let value = this.newMemo;
+      console.log(id, value);
       this.$emit("addMemo", id, value);
+      this.newMemo = "";
     },
-    clearInput() {
+    hideInputMemo() {
+      this.$emit("hideInputMemo");
       this.newMemo = "";
     }
   }

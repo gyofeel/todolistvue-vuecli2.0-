@@ -12,7 +12,12 @@
       v-on:removeDone="removeTodoItem"
       v-on:cancelDone="cancelDone"
     ></Done>
-    <MemoInput v-bind:iddata="memoId" v-if="this.showingMemo" v-on:addMemo="addMemo"></MemoInput>
+    <MemoInput
+      v-bind:propsdata="memoId"
+      v-if="this.showingMemo"
+      v-on:addMemo="addMemo"
+      v-on:hideInputMemo="hideInputMemo"
+    ></MemoInput>
   </div>
 </template>
 
@@ -48,13 +53,21 @@ export default {
     },
     cancelDone(id) {
       let idx = this.todoItems.findIndex(o => o.id === id);
-      this.doneItems[idx].done = false;
+      this.todoItems[idx].done = false;
     },
     showInputMemo(id) {
-      this.showingMemo = !this.showingMemo;
       this.memoId = id;
+      this.showingMemo = !this.showingMemo;
     },
-    addMemo() {}
+    hideInputMemo() {
+      this.showingMemo = !this.showingMemo;
+    },
+    addMemo(id, value) {
+      let idx = this.todoItems.findIndex(o => o.id === id);
+      this.memoId = "";
+      this.todoItems[idx].memo = value;
+      this.showingMemo = !this.showingMemo;
+    }
   },
   // created() {
   //   if (localStorage.todoItems.length > 0) {
