@@ -40,8 +40,8 @@ export default {
   border-radius: 10px;
 }
 
-.todo::-webkit-scrollbar{
-  display:none;
+.todo::-webkit-scrollbar {
+  display: none;
 }
 
 .todo .items {
