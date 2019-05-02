@@ -35,7 +35,7 @@ export default {
 
 <style>
 .header {
-  width: 40%;
+  width: 70%;
   height: 150px;
   background-color: #badc58;
   display: flex;
@@ -62,7 +62,6 @@ export default {
   opacity: 1;
 }
 .header .input::placeholder {
-  display: none;
   opacity: 0.5;
 }
 </style>
