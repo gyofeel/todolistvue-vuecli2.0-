@@ -3,6 +3,7 @@
     <Header v-on:addTodo="addTodo"></Header>
     <Todo
       v-bind:propsdata="todoItems"
+      v-bind:memoid="memoId"
       v-on:addDone="addDone"
       v-on:removeTodo="removeTodoItem"
       v-on:showInputMemo="showInputMemo"
@@ -12,12 +13,12 @@
       v-on:removeDone="removeTodoItem"
       v-on:cancelDone="cancelDone"
     ></Done>
-    <MemoInput
+    <!-- <MemoInput
       v-bind:propsdata="memoId"
       v-if="this.showingMemo"
       v-on:addMemo="addMemo"
       v-on:hideInputMemo="hideInputMemo"
-    ></MemoInput>
+    ></MemoInput>-->
   </div>
 </template>
 
@@ -28,6 +29,8 @@ import Done from "./components/Done.vue";
 import MemoInput from "./components/MemoInput.vue";
 
 import { initTodoItem } from "./functions/todoItemData.js";
+
+import router from "./router/index.js";
 
 export default {
   name: "app",
@@ -57,6 +60,7 @@ export default {
     },
     showInputMemo(id) {
       this.memoId = id;
+      console.log(this.memoId);
       this.showingMemo = !this.showingMemo;
     },
     hideInputMemo() {
@@ -69,6 +73,7 @@ export default {
       this.showingMemo = !this.showingMemo;
     }
   },
+  create() {},
   // created() {
   //   if (localStorage.todoItems.length > 0) {
   //     for (let el of localStorage.todoItems) {

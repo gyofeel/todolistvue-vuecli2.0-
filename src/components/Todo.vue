@@ -3,22 +3,29 @@
     <transition-group class="items" name="list" tag="div">
       <div v-for="(todoItem) in propsdata" v-bind:key="todoItem.id">
         <!-- .self : prevent event capturing. -->
-        <div v-if="!todoItem.done" class="item" @click.self="showInputMemo(todoItem.id)">
+        <router-link
+          tag="div"
+          to="/memoinput"
+          v-if="!todoItem.done"
+          class="item"
+          @click.self="showInputMemo(todoItem.id)"
+        >
           <span class="check" @click="addDone(todoItem.id)">
             <i class="checkBtn fas fa-check" aria-hidden="true"></i>
           </span>
           <span>{{todoItem.todo}}</span>
           <span class="memo">{{todoItem.memo}}</span>
           <span class="removebutton" @click="removeTodo(todoItem.id)">삭제</span>
-        </div>
+        </router-link>
       </div>
     </transition-group>
+    <router-view v-bind:memoid="memoid" v-on:addMemo="addMemo" v-on:hideInputMemo="hideInputMemo"></router-view>
   </section>
 </template>
 
 <script>
 export default {
-  props: ["propsdata"],
+  props: ["propsdata", "memoid"],
   methods: {
     addDone(id) {
       this.$emit("addDone", id);

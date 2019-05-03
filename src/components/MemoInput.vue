@@ -15,12 +15,11 @@ export default {
       newMemo: ""
     };
   },
-  props: ["propsdata"],
+  props: ["memoid"],
   methods: {
     addMemo() {
-      let id = this.propsdata;
+      let id = this.memoid;
       let value = this.newMemo;
-      console.log(id, value);
       this.$emit("addMemo", id, value);
       this.newMemo = "";
     },
@@ -44,6 +43,7 @@ export default {
   background-color: gold;
   border-radius: 20px;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+  z-index: 100;
 }
 
 .memoinput.modalmask input {
