@@ -6,7 +6,7 @@
       v-bind:memoid="memoId"
       v-on:addDone="addDone"
       v-on:removeTodo="removeTodoItem"
-      v-on:showInputMemo="showInputMemo"
+      v-on:setMemoId="setMemoId"
     ></Todo>
     <Done
       v-bind:propsdata="todoItems"
@@ -32,12 +32,13 @@ import { initTodoItem } from "./functions/todoItemData.js";
 
 import router from "./router/index.js";
 
+import EventBus from "./functions/eventbus.js";
+
 export default {
   name: "app",
   data() {
     return {
       todoItems: [],
-      showingMemo: false,
       memoId: ""
     };
   },
@@ -58,22 +59,31 @@ export default {
       let idx = this.todoItems.findIndex(o => o.id === id);
       this.todoItems[idx].done = false;
     },
-    showInputMemo(id) {
+    setMemoId(id) {
+      console.log(id);
       this.memoId = id;
-      console.log(this.memoId);
-      this.showingMemo = !this.showingMemo;
-    },
-    hideInputMemo() {
-      this.showingMemo = !this.showingMemo;
-    },
-    addMemo(id, value) {
-      let idx = this.todoItems.findIndex(o => o.id === id);
-      this.memoId = "";
-      this.todoItems[idx].memo = value;
-      this.showingMemo = !this.showingMemo;
     }
+    // hideInputMemo() {},
+    // addMemo(id, value) {
+    //   let idx = this.todoItems.findIndex(o => o.id === id);
+    //   this.memoId = "";
+    //   this.todoItems[idx].memo = value;
+    //   this.showingMemo = !this.showingMemo;
+    // }
   },
-  create() {},
+  created() {
+    let that = this;
+    EventBus.$on("addMemo", function(value) {
+      console.log(that.memoId);
+      let idx = that.todoItems.findIndex(o => o.id === that.memoId);
+      that.memoId = "";
+      that.todoItems[idx].memo = value;
+      that.showingMemo = !that.showingMemo;
+    });
+    EventBus.$on("hideInputMemo", function() {
+      console.log("llkj");
+    });
+  },
   // created() {
   //   if (localStorage.todoItems.length > 0) {
   //     for (let el of localStorage.todoItems) {

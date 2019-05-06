@@ -9,6 +9,9 @@
 
 
 <script>
+import EventBus from "../functions/eventbus.js";
+import router from "../router/index.js";
+
 export default {
   data() {
     return {
@@ -18,13 +21,13 @@ export default {
   props: ["memoid"],
   methods: {
     addMemo() {
-      let id = this.memoid;
       let value = this.newMemo;
-      this.$emit("addMemo", id, value);
+      EventBus.$emit("addMemo", value);
+      router.push({ path: "/" });
       this.newMemo = "";
     },
     hideInputMemo() {
-      this.$emit("hideInputMemo");
+      EventBus.$emit("hideInputMemo");
       this.newMemo = "";
     }
   }
