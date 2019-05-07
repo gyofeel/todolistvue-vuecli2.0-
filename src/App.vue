@@ -46,6 +46,8 @@ export default {
     addTodo(item) {
       let _item = initTodoItem(item);
       this.todoItems.push(_item);
+      localStorage.setItem(todoItem, _item);
+      console.log(localStorage);
     },
     addDone(id) {
       let idx = this.todoItems.findIndex(o => o.id === id);
@@ -54,6 +56,8 @@ export default {
     removeTodoItem(id) {
       let idx = this.todoItems.findIndex(o => o.id === id);
       this.todoItems.splice(idx, 1);
+      localStorage.removeItem(this.todoItems[idx]);
+      console.log(localStroage);
     },
     cancelDone(id) {
       let idx = this.todoItems.findIndex(o => o.id === id);
@@ -81,7 +85,8 @@ export default {
       that.showingMemo = !that.showingMemo;
     });
     EventBus.$on("hideInputMemo", function() {
-      console.log("llkj");
+      let that = this;
+      that.memodId = "";
     });
   },
   // created() {

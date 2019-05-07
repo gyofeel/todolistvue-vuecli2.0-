@@ -28,6 +28,7 @@ export default {
     },
     hideInputMemo() {
       EventBus.$emit("hideInputMemo");
+      router.push({ path: "/" });
       this.newMemo = "";
     }
   }
