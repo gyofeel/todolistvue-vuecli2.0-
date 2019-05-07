@@ -45,8 +45,8 @@ export default {
   methods: {
     addTodo(item) {
       let _item = initTodoItem(item);
+      localStorage.setItem(_item.id, JSON.stringify(_item));
       this.todoItems.push(_item);
-      localStorage.setItem(todoItem, _item);
       console.log(localStorage);
     },
     addDone(id) {
@@ -55,9 +55,9 @@ export default {
     },
     removeTodoItem(id) {
       let idx = this.todoItems.findIndex(o => o.id === id);
+      localStorage.removeItem(this.todoItems[idx].id);
       this.todoItems.splice(idx, 1);
-      localStorage.removeItem(this.todoItems[idx]);
-      console.log(localStroage);
+      console.log(localStorage.length);
     },
     cancelDone(id) {
       let idx = this.todoItems.findIndex(o => o.id === id);
@@ -67,15 +67,18 @@ export default {
       console.log(id);
       this.memoId = id;
     }
-    // hideInputMemo() {},
-    // addMemo(id, value) {
-    //   let idx = this.todoItems.findIndex(o => o.id === id);
-    //   this.memoId = "";
-    //   this.todoItems[idx].memo = value;
-    //   this.showingMemo = !this.showingMemo;
-    // }
   },
   created() {
+    // localStorage.clear();
+    if (localStorage.length > 0) {
+      for (let i = 0; i < localStorage.length; i++) {
+        console.log(localStorage[localStorage.key(i)]);
+        this.todoItems.push(JSON.parse(localStorage[localStorage.key(i)]));
+        console.log(this.todoItems);
+      }
+    }
+    console.log(localStorage);
+
     let that = this;
     EventBus.$on("addMemo", function(value) {
       console.log(that.memoId);
