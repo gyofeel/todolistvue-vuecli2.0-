@@ -9,23 +9,26 @@
 
 
 <script>
+import EventBus from "../functions/eventbus.js";
+import router from "../router/index.js";
+
 export default {
   data() {
     return {
       newMemo: ""
     };
   },
-  props: ["propsdata"],
+  props: ["memoid"],
   methods: {
     addMemo() {
-      let id = this.propsdata;
       let value = this.newMemo;
-      console.log(id, value);
-      this.$emit("addMemo", id, value);
+      EventBus.$emit("addMemo", value);
+      router.push({ path: "/" });
       this.newMemo = "";
     },
     hideInputMemo() {
-      this.$emit("hideInputMemo");
+      EventBus.$emit("hideInputMemo");
+      router.push({ path: "/" });
       this.newMemo = "";
     }
   }
@@ -44,6 +47,7 @@ export default {
   background-color: gold;
   border-radius: 20px;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+  z-index: 100;
 }
 
 .memoinput.modalmask input {
